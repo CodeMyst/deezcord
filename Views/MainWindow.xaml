@@ -19,12 +19,19 @@
                 Margin="0, 150, 0, 0"
                 FontSize="22" />
 
-<TextBlock
-    Text="{Binding StatusText}"
-    HorizontalAlignment="Center"
-    Margin="0, 5, 0, 0"
-    FontSize="12"
-    Foreground="#8c8c8c" />
+            <TextBlock
+                Text="{Binding StatusText}"
+                HorizontalAlignment="Center"
+                Margin="0, 5, 0, 0"
+                FontSize="12"
+                Foreground="#8c8c8c" />
+
+            <TextBlock
+                Text="{Binding UserInfo}"
+                HorizontalAlignment="Center"
+                Margin="0, 5, 0, 0"
+                FontSize="12"
+                Foreground="#8c8c8c" />
 
             <Button 
                 Content="Login with Deezer"
@@ -36,7 +43,20 @@
                 Background="#325a9e"
                 BorderThickness="0"
                 Foreground="#e6e8ed"
-                Command="{Binding Login}" />
+                Command="{Binding Login}"
+                IsVisible="{Binding IsLoginButtonVisible}" />
+
+            <Button 
+                Content="Start"
+                Margin="0, 20, 0, 0"
+                Width="150"
+                Height="30"
+                HorizontalAlignment="Center"
+                FontSize="14"
+                Background="#325a9e"
+                BorderThickness="0"
+                Foreground="#e6e8ed"
+                IsVisible="{Binding IsTurnOnButtonVisible}" />
         </StackPanel>
 
         <TextBlock
