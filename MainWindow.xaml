@@ -1,0 +1,41 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="DeezCord"
+        Background="#0e1116"
+        Foreground="#e6e8ed"
+        Width="320"
+        Height="480">
+    <Grid>
+        <StackPanel>
+            <TextBlock
+                Text="DeezCord"
+                HorizontalAlignment="Center"
+                Margin="0, 150, 0, 0"
+                FontSize="22" />
+
+            <TextBlock
+                Text="Status: off"
+                HorizontalAlignment="Center"
+                Margin="0, 5, 0, 0"
+                FontSize="12"
+                Foreground="#8c8c8c" />
+
+            <Button 
+                Content="Login with Deezer"
+                Margin="0, 20, 0, 0"
+                Width="150"
+                Height="30"
+                HorizontalAlignment="Center"
+                FontSize="14"
+                Background="#325a9e"
+                BorderThickness="0"
+                Foreground="#e6e8ed" />
+        </StackPanel>
+
+        <TextBlock
+            Text="github.com/codemyst/deezcord"
+            VerticalAlignment="Bottom"
+            HorizontalAlignment="Right"
+            Margin="0, 0, 10, 10" />
+    </Grid>
+</Window>
