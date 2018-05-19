@@ -16,16 +16,20 @@ namespace DeezCord
         private const string tokenRequestUri = "https://connect.deezer.com/oauth/access_token.php";     
         private const string lastTrackEndpoint = "https://api.deezer.com/user/me/history";
         private const string userEndpoint = "https://api.deezer.com/user/me";
+        private const string tokenPath = "token.txt";
 
-        private static string token;   
+        private static string token;
 
         public static async Task Authenticate ()
         {
-            HttpListener http = new HttpListener ();
-            http.Prefixes.Add (redirectUri);
-            http.Start ();
+            Console.WriteLine ($"Redirect URI: {redirectUri}");
+            
+            HttpListener http = new HttpListener();
+            http.Prefixes.Add(redirectUri);
+            Console.WriteLine ("Listening...");
+            http.Start();
 
-            string authorizationRequest = $"{authorizationEndpoint}?app_id={Program.Configuration ["Deezer:ClientId"]}&redirect_uri={Uri.EscapeDataString (redirectUri)}&perms=listening_history";
+            string authorizationRequest = $"https://connect.deezer.com/oauth/auth.php?app_id={APIKeys.DeezerClientId}&redirect_uri={Uri.EscapeDataString(redirectUri)}&perms=listening_history";
 
             Process.Start ("xdg-open", authorizationRequest);
 
@@ -57,7 +61,11 @@ namespace DeezCord
 
             string code = context.Request.QueryString.Get ("code");
 
-            string tokenRequestBody = $"code={code}&app_id={Program.Configuration ["Deezer:ClientId"]}&secret={Program.Configuration ["Deezer:ClientSecret"]}&response_type=token";
+            Console.WriteLine ($"Authorization code: {code}");
+
+            Console.WriteLine ("Exchanging code for tokens...");
+
+            string tokenRequestBody = $"code={code}&app_id={APIKeys.DeezerClientId}&secret={APIKeys.DeezerClientSecret}&response_type=token";
 
             HttpWebRequest tokenRequest = (HttpWebRequest) WebRequest.Create (tokenRequestUri);
             tokenRequest.Method = "POST";
@@ -83,12 +91,16 @@ namespace DeezCord
             }
             catch (WebException e)
             {
+                if (e.Status == WebExceptionStatus.ProtocolError)
+                {}
+
                 if (e.Response is HttpWebResponse r)
                 {
                     Console.WriteLine ($"HTTP: {response.StatusCode}");
                     using (StreamReader reader = new StreamReader (r.GetResponseStream () ?? throw new Exception ()))
                     {
                         string responseText = await reader.ReadToEndAsync ();
+                        Console.WriteLine (responseText);
                     }
                 }
             }
@@ -108,6 +120,12 @@ namespace DeezCord
             {
                 string userinfoResponseText = await userinfoResponseReader.ReadToEndAsync();
 
+                if (userinfoResponseText.Contains ("Invalid OAuth access token."))
+                {
+                    await Authenticate ();
+                    return await LastTrack ();
+                }
+
                 History tracks = JsonConvert.DeserializeObject<History> (userinfoResponseText);
 
                 return tracks.Tracks [0];
@@ -124,9 +142,16 @@ namespace DeezCord
             userinfoRequest.Accept = "Accept=text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8";
 
             WebResponse userinfoResponse = await userinfoRequest.GetResponseAsync();
+
             using (StreamReader userinfoResponseReader = new StreamReader(userinfoResponse.GetResponseStream() ?? throw new Exception ()))
             {
                 string userinfoResponseText = await userinfoResponseReader.ReadToEndAsync();
+
+                if (userinfoResponseText.Contains ("Invalid OAuth access token."))
+                {
+                    await Authenticate ();
+                    return await User ();
+                }
 
                 User user = JsonConvert.DeserializeObject<User> (userinfoResponseText);
 

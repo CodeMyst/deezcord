@@ -27,11 +27,19 @@
                 Foreground="#8c8c8c" />
 
             <TextBlock
-                Text="{Binding UserInfo}"
+                Text="Deezer user: CodeMyst"
                 HorizontalAlignment="Center"
                 Margin="0, 5, 0, 0"
                 FontSize="12"
                 Foreground="#8c8c8c" />
+
+            <TextBlock 
+                Text="{Binding Song}"
+                Foreground="#8c8c8c"
+                FontSize="12"
+                Margin="0, 5, 0, 0"
+                HorizontalAlignment="Center"
+                TextWrapping="Wrap" />
 
             <Button 
                 Content="Login with Deezer"
@@ -56,7 +64,8 @@
                 Background="#325a9e"
                 BorderThickness="0"
                 Foreground="#e6e8ed"
-                IsVisible="{Binding IsTurnOnButtonVisible}" />
+                IsVisible="{Binding IsTurnOnButtonVisible}"
+                Command="{Binding StartPresence}" />
         </StackPanel>
 
         <TextBlock

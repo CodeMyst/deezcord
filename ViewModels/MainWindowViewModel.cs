@@ -1,3 +1,4 @@
+using System;
 using System.Threading.Tasks;
 
 using ReactiveUI;
@@ -10,6 +11,9 @@ namespace DeezCord.ViewModels
         private string _userInfo;
         private bool _isLoginButtonVisible = true;
         private bool _isTurnOnButtonVisible;
+        private string _song;
+
+        private Presence presence;
 
         public string StatusText
         {
@@ -35,9 +39,16 @@ namespace DeezCord.ViewModels
             set => this.RaiseAndSetIfChanged (ref _isTurnOnButtonVisible, value);
         }
 
+        public string Song
+        {
+            get => _song;
+            set => this.RaiseAndSetIfChanged (ref _song, value);
+        }
+
         public MainWindowViewModel ()
         {
             StatusText = "Status: off";
+            presence = new Presence ();
         }
 
         public async Task Login ()
@@ -49,6 +60,21 @@ namespace DeezCord.ViewModels
 
             IsLoginButtonVisible = false;
             IsTurnOnButtonVisible = true;
+        }
+
+        public async Task StartPresence ()
+        {
+            IsTurnOnButtonVisible = false;
+
+            while (true)
+            {
+                Track t = await DeezerAPI.LastTrack ();
+                presence.UpdatePresence (t);
+                StatusText = "Status: running";
+                Song = $"{t.Title} by {t.Artist.Name} - {t.Album.Title}";
+                
+                await Task.Delay (30000);
+            }
         }
     }
 }
