@@ -4,6 +4,7 @@ using System.Net;
 using System.Text;
 using System.Diagnostics;
 using System.Threading.Tasks;
+using System.Runtime.InteropServices;
 
 using Newtonsoft.Json;
 
@@ -31,7 +32,23 @@ namespace DeezCord
 
             string authorizationRequest = $"https://connect.deezer.com/oauth/auth.php?app_id={APIKeys.DeezerClientId}&redirect_uri={Uri.EscapeDataString(redirectUri)}&perms=listening_history";
 
-            Process.Start ("xdg-open", authorizationRequest);
+            if (RuntimeInformation.IsOSPlatform (OSPlatform.Windows))
+            {
+                ProcessStartInfo psi = new ProcessStartInfo
+                {
+                    UseShellExecute = true,
+                    FileName = authorizationRequest
+                };
+                Process.Start (psi);
+            }
+            else if (RuntimeInformation.IsOSPlatform (OSPlatform.Linux))
+            {
+                Process.Start ("xdg-open", authorizationRequest);
+            }
+            else if (RuntimeInformation.IsOSPlatform (OSPlatform.OSX))
+            {
+                Process.Start ("open", authorizationRequest);
+            }
 
             HttpListenerContext context = await http.GetContextAsync ();
 

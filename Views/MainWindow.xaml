@@ -27,7 +27,7 @@
                 Foreground="#8c8c8c" />
 
             <TextBlock
-                Text="Deezer user: CodeMyst"
+                Text="{Binding UserInfo}"
                 HorizontalAlignment="Center"
                 Margin="0, 5, 0, 0"
                 FontSize="12"
