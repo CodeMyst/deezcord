@@ -1,0 +1,14 @@
+{
+	"authors":
+	[
+		"CodeMyst"
+	],
+	"copyright": "Copyright © 2019, CodeMyst",
+	"description": "deezer Discord Rich Presence",
+	"license": "MIT",
+	"name": "deezcord",
+	"dependencies":
+	{
+		"gtk-d": "~>3.9.0"
+	}
+}

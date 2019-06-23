@@ -1,0 +1,15 @@
+.dub
+docs.json
+__dummy.html
+docs/
+/deezcord
+deezcord.so
+deezcord.dylib
+deezcord.dll
+deezcord.a
+deezcord.lib
+deezcord-test-*
+*.exe
+*.o
+*.obj
+*.lst
