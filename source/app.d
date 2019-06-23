@@ -51,51 +51,54 @@ private class MainWindow : ApplicationWindow
 		Color.parse ("#FFFFFF", fg);
 		modifyFg (GtkStateType.NORMAL, fg);
 
-		StatusIcon statusIcon = new StatusIcon ("assets/small_icon.png", true);
-		statusIcon.setName ("deezcord");
-		statusIcon.setTooltipText ("deezcord");
-
-		statusIcon.addOnActivate (delegate void (StatusIcon)
+		version (Windows)
 		{
-			this.show ();
-			this.deiconify ();
-		});
+			StatusIcon statusIcon = new StatusIcon ("assets/small_icon.png", true);
+			statusIcon.setName ("deezcord");
+			statusIcon.setTooltipText ("deezcord");
 
-		Menu menu = new Menu ();
-		MenuItem menuItemExit = new MenuItem ("Exit");
-		menuItemExit.addOnActivate (delegate void (MenuItem)
-		{
-			import core.stdc.stdlib : exit;
-			exit (0);
-		});
-
-		statusIcon.addOnPopupMenu (delegate void (uint button, uint activateTime, StatusIcon)
-		{
-			menu.popup (button, activateTime);
-		});
-
-		menu.append (menuItemExit);
-		menu.showAll ();
-
-		statusIcon.setVisible (false);
-
-		addOnWindowState (delegate bool (GdkEventWindowState* event, Widget widget)
-		{
-			if (event.changedMask & GdkWindowState.ICONIFIED)
+			statusIcon.addOnActivate (delegate void (StatusIcon)
 			{
-				if (event.newWindowState & GdkWindowState.ICONIFIED)
-				{
-					widget.hide ();
-					statusIcon.setVisible (true);
-				}
-				else
-				{
-					statusIcon.setVisible (false);
-				}
-			}
+				this.show ();
+				this.deiconify ();
+			});
 
-			return true;
-		});
+			Menu menu = new Menu ();
+			MenuItem menuItemExit = new MenuItem ("Exit");
+			menuItemExit.addOnActivate (delegate void (MenuItem)
+			{
+				import core.stdc.stdlib : exit;
+				exit (0);
+			});
+
+			statusIcon.addOnPopupMenu (delegate void (uint button, uint activateTime, StatusIcon)
+			{
+				menu.popup (button, activateTime);
+			});
+
+			menu.append (menuItemExit);
+			menu.showAll ();
+
+			statusIcon.setVisible (false);
+
+			addOnWindowState (delegate bool (GdkEventWindowState* event, Widget widget)
+			{
+				if (event.changedMask & GdkWindowState.ICONIFIED)
+				{
+					if (event.newWindowState & GdkWindowState.ICONIFIED)
+					{
+						widget.hide ();
+						statusIcon.setVisible (true);
+					}
+					else
+					{
+						statusIcon.setVisible (false);
+					}
+				}
+
+				return true;
+			});
+		}
 
 		VBox mainBox = new VBox (false, 0);
 		add (mainBox);
