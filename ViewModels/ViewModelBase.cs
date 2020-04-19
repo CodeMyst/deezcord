@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using ReactiveUI;
 
-namespace deezcord.ViewModels
+namespace Deezcord.ViewModels
 {
     public class ViewModelBase : ReactiveObject
     {

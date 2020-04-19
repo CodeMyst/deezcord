@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace deezcord.ViewModels
+namespace Deezcord.ViewModels
 {
     public class MainWindowViewModel : ViewModelBase
     {

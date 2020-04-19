@@ -1,10 +1,10 @@
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
-using deezcord.ViewModels;
-using deezcord.Views;
+using Deezcord.ViewModels;
+using Deezcord.Views;
 
-namespace deezcord
+namespace Deezcord
 {
     public class App : Application
     {

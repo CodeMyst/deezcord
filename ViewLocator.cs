@@ -4,9 +4,9 @@
 using System;
 using Avalonia.Controls;
 using Avalonia.Controls.Templates;
-using deezcord.ViewModels;
+using Deezcord.ViewModels;
 
-namespace deezcord
+namespace Deezcord
 {
     public class ViewLocator : IDataTemplate
     {

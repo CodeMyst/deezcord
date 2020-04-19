@@ -2,7 +2,7 @@ using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
 
-namespace deezcord.Views
+namespace Deezcord.Views
 {
     public class MainWindow : Window
     {

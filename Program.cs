@@ -4,7 +4,7 @@ using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Logging.Serilog;
 using Avalonia.ReactiveUI;
 
-namespace deezcord
+namespace Deezcord
 {
     class Program
     {
