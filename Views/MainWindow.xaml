@@ -6,7 +6,12 @@
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="Deezcord.Views.MainWindow"
         Icon="/Assets/avalonia-logo.ico"
-        Title="deezcord">
+        Title="deezcord"
+        CanResize="false"
+        Width="320"
+        Height="480"
+        Background="#121216"
+        Foreground="#ffffff">
 
     <Design.DataContext>
         <vm:MainWindowViewModel/>
